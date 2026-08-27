@@ -42,6 +42,9 @@ public class SecurityConfig {
                     // 认证公开端点
                     .requestMatchers("/api/auth/**")
                     .permitAll()
+                    // 租户自助开通（公开 · SaaS 增长路径）
+                    .requestMatchers("/api/tenants/register")
+                    .permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                     .permitAll()
                     .requestMatchers("/actuator/health", "/actuator/info")
