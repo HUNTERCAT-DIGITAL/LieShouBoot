@@ -47,7 +47,7 @@ fi
 # ⑤ 移动端（可选 · Expo）
 if [ "$MOBILE" = 1 ]; then
   echo "⑤ 构建移动端（Expo）..."
-  (cd apps/mobile && pnpm install --silent && pnpm export)
+  (cd apps/mobile && pnpm install --silent && pnpm build)
 fi
 
 # ⑥ 组合输出
