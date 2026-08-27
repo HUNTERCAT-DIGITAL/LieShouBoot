@@ -56,6 +56,7 @@ docker compose up -d --build
 
 启动后：
 - **前端门户 + API 同源**：`http://localhost:43115`（单 jar serve，专属产品介绍页 + SPA 路由 + `/api/**`）
+- **公网入口**：`https://lieshou-boot.huntercat.cn`（入口机 nginx TLS 终结 → frp 隧道 → 本机 43115，见 `deploy/bt-panel-nginx/`）
 - 默认管理员：`admin / admin123`（租户 `huntercat`，Flyway seed）
 
 ## 开发
