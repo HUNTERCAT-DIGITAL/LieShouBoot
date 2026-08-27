@@ -10,9 +10,21 @@
 [submodule "apps/mini-program"]
 	path = apps/mini-program
 	url = git@github.com:HUNTERCAT-DIGITAL/lieshou-mini-program.git
-[submodule "open"]
-	path = open
-	url = git@github.com:HUNTERCAT-DIGITAL/lieshou-cloud-web.git
 [submodule "framework"]
 	path = framework
 	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-framework.git
+[submodule "open/contract-api"]
+	path = open/contract-api
+	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-contract-api.git
+[submodule "open/contract-types"]
+	path = open/contract-types
+	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-contract-types.git
+[submodule "open/contract-config"]
+	path = open/contract-config
+	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-contract-config.git
+[submodule "open/ui"]
+	path = open/ui
+	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-ui.git
+[submodule "open/core-web"]
+	path = open/core-web
+	url = https://github.com/HUNTERCAT-DIGITAL/lieshou-core-web.git
