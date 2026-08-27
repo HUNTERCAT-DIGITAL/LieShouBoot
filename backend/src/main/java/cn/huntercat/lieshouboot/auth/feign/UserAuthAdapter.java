@@ -5,7 +5,7 @@ import cn.huntercat.lieshou.framework.domain.TenantRepository;
 import cn.huntercat.lieshou.framework.domain.User;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
 import cn.huntercat.lieshou.framework.domain.VerificationCode;
-import cn.huntercat.lieshouboot.user.service.VerificationService;
+import cn.huntercat.lieshou.framework.service.VerificationService;
 import cn.huntercat.lieshou.framework.auth.UserAuthPort;
 import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
 import java.time.Instant;

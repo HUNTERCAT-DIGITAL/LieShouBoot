@@ -23,7 +23,7 @@ import cn.huntercat.lieshou.framework.domain.TenantInviteRepository;
 import cn.huntercat.lieshou.framework.domain.TenantRepository;
 import cn.huntercat.lieshou.framework.domain.User;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
-import cn.huntercat.lieshouboot.user.service.AuditService;
+import cn.huntercat.lieshou.framework.service.AuditService;
 import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
