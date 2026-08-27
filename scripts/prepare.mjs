@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * LieShouBoot · prepare.mjs（四端自动装配器 · 约定优于配置）
+ * lieshou-boot · prepare.mjs（四端自动装配器 · 约定优于配置）
  *
  * 扫描 packages/boot/src/features/，生成四端注入（客户聚合仓模式）：
  *   - admin-web  : apps/admin/src/config/editions/boot.extra.ts（品牌+门户+extraRoutes）
@@ -46,16 +46,16 @@ const rel = (from, to) => path.relative(from, to).replace(/\\/g, '/');
   const editionsDir = path.join(root, 'apps/admin/src/config/editions');
   const relBoot = rel(editionsDir, bootSrc);
   const content = `/**
- * boot.extra.ts · 由 LieShouBoot scripts/prepare.mjs 自动生成，勿手改。
+ * boot.extra.ts · 由 lieshou-boot scripts/prepare.mjs 自动生成，勿手改。
  * 自动装配 features：品牌 + 门户 + 专属路由。
  */
-import { bootBrand } from '${relBoot}/boot';
+import { bootBrand } from '@lieshoucloud/boot';
 
 export default {
   ...bootBrand,
-  portal: { load: () => import('${relBoot}/features/portal/ui/admin/BootPortal') },
+  portal: { load: () => import('@lieshoucloud/boot/features/portal/ui/admin/BootPortal') },
   extraRoutes: [
-${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('${relBoot}/features/${p.file}'), menu: { name: '${p.name}' } },`).join('\n')}
+${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('@lieshoucloud/boot/features/${p.file}'), menu: { name: '${p.name}' } },`).join('\n')}
   ],
 };
 `;
@@ -69,14 +69,14 @@ ${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('${relBoot}/f
   const editionsDir = path.join(root, 'apps/desktop/src/config/editions');
   const relBoot = rel(editionsDir, bootSrc);
   const content = `/**
- * boot.extra.ts · 由 LieShouBoot scripts/prepare.mjs 自动生成，勿手改。
+ * boot.extra.ts · 由 lieshou-boot scripts/prepare.mjs 自动生成，勿手改。
  * 自动装配 features：专属路由（DesktopEdition.extraRoutes）。
  */
 import type { DesktopEdition } from './types';
 
 export default {
   extraRoutes: [
-${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('${relBoot}/features/${p.file}') },`).join('\n')}
+${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('@lieshoucloud/boot/features/${p.file}') },`).join('\n')}
   ],
 } satisfies Partial<DesktopEdition>;
 `;
@@ -95,7 +95,7 @@ ${nonPortal.map((p) => `  { path: '/${p.feat}', load: () => import('${relBoot}/f
   ).join('\n');
 
   const extraContent = `/**
- * LieShouBoot 专属页面注册（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
+ * lieshou-boot 专属页面注册（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
  */
 export interface ClientEntry {
   key: string;
@@ -114,11 +114,11 @@ ${entries}
 
   // 薄壳页（内联 Taro UI + 品牌单源）
   const shell = `/**
- * LieShouBoot 专属工作台薄壳（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
+ * lieshou-boot 专属工作台薄壳（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
  * 内联 Taro UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { Text, View } from '@tarojs/components';
-import { bootBrand } from '${relBoot}/boot';
+import { bootBrand } from '@lieshoucloud/boot';
 
 export default function BootWorkspace() {
   return (
@@ -142,7 +142,7 @@ export default function BootWorkspace() {
     path.join(pageDir, 'index.config.ts'),
     `// 微信小程序页面配置: boot/workspace（prepare.mjs 注入）
 export default {
-  navigationBarTitleText: "LieShouBoot 工作台",
+  navigationBarTitleText: "lieshou-boot 工作台",
 } as const;
 `
   );
@@ -154,11 +154,11 @@ export default {
   const pageDir = path.join(root, 'apps/mobile/app/(main)/boot');
   const relBoot = rel(path.join(pageDir), bootSrc);
   const shell = `/**
- * LieShouBoot 专属工作台薄壳（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
+ * lieshou-boot 专属工作台薄壳（scripts/prepare.mjs 生成 · 勿手改/勿提交）.
  * 内联 RN UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { bootBrand } from '${relBoot}/boot';
+import { bootBrand } from '@lieshoucloud/boot';
 
 export default function BootWorkspace() {
   return (
