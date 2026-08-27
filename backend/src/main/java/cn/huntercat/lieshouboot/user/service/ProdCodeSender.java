@@ -3,7 +3,7 @@ package cn.huntercat.lieshouboot.user.service;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import cn.huntercat.lieshouboot.user.domain.VerificationCode;
+import cn.huntercat.lieshou.framework.domain.VerificationCode;
 
 /**
  * 生产验证码发送器（ADR-0023 Phase 2 落地）.

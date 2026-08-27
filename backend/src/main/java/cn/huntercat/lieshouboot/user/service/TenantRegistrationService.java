@@ -4,12 +4,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.huntercat.lieshouboot.user.domain.Role;
-import cn.huntercat.lieshouboot.user.domain.RoleRepository;
-import cn.huntercat.lieshouboot.user.domain.Tenant;
-import cn.huntercat.lieshouboot.user.domain.TenantRepository;
-import cn.huntercat.lieshouboot.user.domain.User;
-import cn.huntercat.lieshouboot.user.domain.UserRepository;
+import cn.huntercat.lieshou.framework.domain.Role;
+import cn.huntercat.lieshou.framework.domain.RoleRepository;
+import cn.huntercat.lieshou.framework.domain.Tenant;
+import cn.huntercat.lieshou.framework.domain.TenantRepository;
+import cn.huntercat.lieshou.framework.domain.User;
+import cn.huntercat.lieshou.framework.domain.UserRepository;
 import java.util.List;
 import java.util.regex.Pattern;
 

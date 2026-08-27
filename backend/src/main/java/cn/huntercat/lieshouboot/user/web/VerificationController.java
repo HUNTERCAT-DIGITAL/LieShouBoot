@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import cn.huntercat.lieshouboot.user.domain.VerificationCode;
+import cn.huntercat.lieshou.framework.domain.VerificationCode;
 import cn.huntercat.lieshouboot.user.service.VerificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

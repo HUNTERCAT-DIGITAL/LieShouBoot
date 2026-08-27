@@ -1,7 +1,7 @@
 package cn.huntercat.lieshouboot.approval.feign;
 
-import cn.huntercat.lieshouboot.user.domain.User;
-import cn.huntercat.lieshouboot.user.domain.UserRepository;
+import cn.huntercat.lieshou.framework.domain.User;
+import cn.huntercat.lieshou.framework.domain.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Component;
 

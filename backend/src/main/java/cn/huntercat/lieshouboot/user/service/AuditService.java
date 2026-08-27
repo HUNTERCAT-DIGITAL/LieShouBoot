@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import cn.huntercat.lieshou.framework.common.audit.AuditEvent;
 import cn.huntercat.lieshou.framework.common.audit.AuditRecorder;
-import cn.huntercat.lieshouboot.user.domain.AuditLog;
-import cn.huntercat.lieshouboot.user.domain.AuditLog.Action;
-import cn.huntercat.lieshouboot.user.domain.AuditLog.Outcome;
-import cn.huntercat.lieshouboot.user.domain.AuditLogRepository;
+import cn.huntercat.lieshou.framework.domain.AuditLog;
+import cn.huntercat.lieshou.framework.domain.AuditLog.Action;
+import cn.huntercat.lieshou.framework.domain.AuditLog.Outcome;
+import cn.huntercat.lieshou.framework.domain.AuditLogRepository;
 
 /**
  * 操作审计服务（DATA_SECURITY.md §7 · append-only）.

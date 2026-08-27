@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 import cn.huntercat.lieshou.framework.common.web.TenantHeaders;
-import cn.huntercat.lieshouboot.user.domain.AuditLog;
-import cn.huntercat.lieshouboot.user.domain.Tenant;
-import cn.huntercat.lieshouboot.user.domain.TenantRepository;
-import cn.huntercat.lieshouboot.user.domain.UserRepository;
+import cn.huntercat.lieshou.framework.domain.AuditLog;
+import cn.huntercat.lieshou.framework.domain.Tenant;
+import cn.huntercat.lieshou.framework.domain.TenantRepository;
+import cn.huntercat.lieshou.framework.domain.UserRepository;
 import cn.huntercat.lieshouboot.user.service.AuditService;
 import cn.huntercat.lieshouboot.user.service.TenantRegistrationService;
 import io.swagger.v3.oas.annotations.Operation;

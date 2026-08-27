@@ -1,8 +1,8 @@
 package cn.huntercat.lieshouboot.admin.feign;
 
 import cn.huntercat.lieshouboot.admin.feign.dto.UserDTO;
-import cn.huntercat.lieshouboot.user.domain.User;
-import cn.huntercat.lieshouboot.user.domain.UserRepository;
+import cn.huntercat.lieshou.framework.domain.User;
+import cn.huntercat.lieshou.framework.domain.UserRepository;
 import org.springframework.stereotype.Component;
 
 /**
