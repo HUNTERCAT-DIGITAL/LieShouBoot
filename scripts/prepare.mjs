@@ -118,7 +118,7 @@ ${entries}
  * 内联 Taro UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { Text, View } from '@tarojs/components';
-import { bootBrand } from '@lieshoucloud/boot';
+import { bootBrand } from '${relBoot}/boot';
 
 export default function BootWorkspace() {
   return (
@@ -158,7 +158,7 @@ export default {
  * 内联 RN UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { bootBrand } from '@lieshoucloud/boot';
+import { bootBrand } from '${relBoot}/boot';
 
 export default function BootWorkspace() {
   return (

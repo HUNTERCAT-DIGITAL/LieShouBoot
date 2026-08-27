@@ -1,4 +1,7 @@
 packages:
   - apps/admin
+  - apps/desktop
+  - apps/mobile
+  - apps/mini-program
   - open/*
   - packages/boot
