@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * approval → user 本地调用适配器（单体现状：同进程直调，实现 framework UserQueryPort）。
  */
-@Component
+@Component("approvalUserQueryAdapter")
 public class UserQueryAdapter implements cn.huntercat.lieshou.framework.approval.port.UserQueryPort {
 
   private final UserRepository userRepo;

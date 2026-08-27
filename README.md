@@ -55,7 +55,7 @@ docker compose up -d --build
 ```
 
 启动后：
-- **前端门户 + API 同源**：`http://localhost:8095`（单 jar serve，专属产品介绍页 + SPA 路由 + `/api/**`）
+- **前端门户 + API 同源**：`http://localhost:43115`（单 jar serve，专属产品介绍页 + SPA 路由 + `/api/**`）
 - 默认管理员：`admin / admin123`（租户 `huntercat`，Flyway seed）
 
 ## 开发
@@ -64,7 +64,7 @@ docker compose up -d --build
 
 ```bash
 mvn -B -ntp -f pom.xml -DskipTests package       # 聚合构建（framework submodule + backend）
-java -jar backend/target/lieshouboot-backend-*.jar  # PORT=8095 DB_PORT=5433 可覆盖
+java -jar backend/target/lieshouboot-backend-*.jar  # PORT=43115 DB_PORT=43116 可覆盖
 ```
 
 > 业务改动：直接改 `framework/`（submodule → lieshou-framework）→ 提交 framework 仓 → 本仓 bump submodule。
@@ -75,7 +75,7 @@ java -jar backend/target/lieshouboot-backend-*.jar  # PORT=8095 DB_PORT=5433 可
 
 ```bash
 cd apps/admin && pnpm install
-VITE_DEV_PROXY_TARGET=http://localhost:8095 pnpm dev --port 5200   # http://localhost:5200
+VITE_DEV_PROXY_TARGET=http://localhost:43115 pnpm dev --port 43117   # http://localhost:43117
 ```
 
 > 前端品牌/门户定制：改 `packages/boot/` → `node scripts/prepare.mjs` → 重新 `build-monolith.sh`。

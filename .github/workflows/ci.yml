@@ -31,7 +31,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: pnpm
+          # 不用 cache: pnpm —— self-hosted runner 缓存上传目标 Azure Blob 本地网络/代理不通，会 0 MB/s 挂死；
+          # runner 本地已有全局 pnpm store，install 速度快（与四端仓一致）
       - name: Setup pnpm
         run: corepack enable && corepack prepare pnpm@9.12.0 --activate
       - name: 生成四端注入 (prepare.mjs)
@@ -66,7 +67,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: pnpm
+          # 不用 cache: pnpm —— 同上（Azure Blob 缓存上传卡死）
       - name: Setup pnpm
         run: corepack enable && corepack prepare pnpm@9.12.0 --activate
       - name: 安装前端依赖

@@ -17,7 +17,16 @@ mkdir -p "$ROOT/backend/src/main/resources/static"
 cp -r "$ROOT/apps/admin/dist/"* "$ROOT/backend/src/main/resources/static/"
 
 echo "④ 打包后端（聚合构建：framework submodule + backend，含内嵌前端）"
-export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-21-openjdk-amd64}
+# 强制 Java 21（用户环境可能默认 17，release 21 会编译失败）
+JAVA_21_CANDIDATES=(/usr/lib/jvm/java-21-openjdk-amd64 /usr/local/openjdk-21 /opt/java/openjdk "$HOME/.sdkman/candidates/java/current")
+if ! "$JAVA_HOME/bin/java" -version 2>&1 | grep -q '"21'; then
+  for j in "${JAVA_21_CANDIDATES[@]}"; do
+    if [ -x "$j/bin/java" ] && "$j/bin/java" -version 2>&1 | grep -q '"21'; then
+      export JAVA_HOME="$j"
+      break
+    fi
+  done
+fi
 mvn -B -ntp -f "$ROOT/pom.xml" -DskipTests package
 
 echo "✅ 完成: backend/target/lieshouboot-backend-*.jar（单进程起全栈）"

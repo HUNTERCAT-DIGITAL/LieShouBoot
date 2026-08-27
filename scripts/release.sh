@@ -78,7 +78,7 @@ cp deploy/bt-panel-nginx/*.conf "$OUT/deploy/" 2>/dev/null || true
   done
   echo ""
   echo "## 使用"
-  echo "- backend jar: \`java -jar backend/lieshouboot-backend-*.jar\`（含前端，端口 8095）"
+  echo "- backend jar: \`java -jar backend/lieshouboot-backend-*.jar\`（含前端，端口 43115）"
   echo "- 或 \`docker compose -f deploy/docker-compose.yml up -d\`"
 } > "$OUT/README.md"
 

@@ -1,0 +1,14 @@
+# docker build 上下文排除（构建上下文 = 仓库根）
+# 后端聚合构建只需要 framework + backend；前端/open/apps 由 build-monolith.sh 本地内嵌
+.git
+**/node_modules
+**/target
+dist
+apps
+open
+packages
+scripts
+deploy
+*.log
+.env
+.env.*

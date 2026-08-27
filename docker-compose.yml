@@ -13,7 +13,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
-      - "${POSTGRES_PORT:-5433}:5432"
+      - "${POSTGRES_PORT:-43116}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -23,7 +23,9 @@ services:
       retries: 12
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: lieshouboot-backend
     environment:
       DB_HOST: postgres
@@ -35,7 +37,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:-please-change-me-in-production-min-32-bytes-12345}
       JWT_ISSUER: ${JWT_ISSUER:-lieshouboot-dev}
     ports:
-      - "${BACKEND_PORT:-8095}:8080"
+      - "${BACKEND_PORT:-43115}:8080"
     depends_on:
       postgres:
         condition: service_healthy

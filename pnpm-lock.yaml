@@ -25,6 +25,9 @@ importers:
       '@lieshoucloud/contract-types':
         specifier: workspace:*
         version: link:../../open/contract-types
+      '@lieshoucloud/core-web':
+        specifier: workspace:*
+        version: link:../../open/core-web
       '@lieshoucloud/ui':
         specifier: workspace:*
         version: link:../../open/ui
@@ -122,6 +125,9 @@ importers:
       '@lieshoucloud/contract-types':
         specifier: workspace:*
         version: link:../../open/contract-types
+      '@lieshoucloud/core-web':
+        specifier: workspace:*
+        version: link:../../open/core-web
       '@lieshoucloud/ui':
         specifier: workspace:*
         version: link:../../open/ui
@@ -192,6 +198,9 @@ importers:
       '@lieshoucloud/contract-types':
         specifier: workspace:*
         version: link:../../open/contract-types
+      '@lieshoucloud/core-web':
+        specifier: workspace:*
+        version: link:../../open/core-web
       '@tarojs/components':
         specifier: 4.0.0
         version: 4.0.0(@tarojs/helper@4.0.0)(@tarojs/shared@4.0.0)(@types/react@18.3.31)(html-webpack-plugin@5.6.8(webpack@5.91.0(@swc/core@1.3.96)(lightningcss@1.33.0)(postcss@8.5.26)))(postcss@8.5.26)(react@18.3.1)(rollup@3.30.0)(webpack-chain@6.5.1)(webpack-dev-server@4.15.2(webpack@5.91.0(@swc/core@1.3.96)(lightningcss@1.33.0)(postcss@8.5.26)))(webpack@5.91.0(@swc/core@1.3.96)(lightningcss@1.33.0)(postcss@8.5.26))
@@ -292,6 +301,9 @@ importers:
       '@lieshoucloud/contract-types':
         specifier: workspace:*
         version: link:../../open/contract-types
+      '@lieshoucloud/core-web':
+        specifier: workspace:*
+        version: link:../../open/core-web
       '@react-native-async-storage/async-storage':
         specifier: 2.2.0
         version: 2.2.0(react-native@0.86.2(@babel/core@7.29.7)(@react-native/metro-config@0.86.2(@babel/core@7.29.7))(@types/react@19.0.0)(react@19.2.3))
