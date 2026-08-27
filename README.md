@@ -80,6 +80,18 @@ VITE_DEV_PROXY_TARGET=http://localhost:8095 pnpm dev --port 5200   # http://loca
 
 > 前端品牌/门户定制：改 `packages/boot/` → `node scripts/prepare.mjs` → 重新 `build-monolith.sh`。
 
+## 发布（CI 自动化 + 组合打包）
+
+```bash
+# 本地组合发布（jar + 可选四端产物 + 组合清单）
+./scripts/release.sh --with-mini            # 核心 + 小程序
+./scripts/release.sh --with-desktop         # + 桌面安装包（需 Rust）
+./scripts/release.sh --all                  # 四端全组合
+
+# CI：push/PR 自动跑后端 mvn verify + 前端 typecheck；
+# 打 tag v* 自动执行组合发布并上传 GitHub Release 资产
+```
+
 ## 与商业版关系
 
 - 开源：**LieShouBoot**（本仓，全栈单体）+ **LieShouCloud**（微服务）
