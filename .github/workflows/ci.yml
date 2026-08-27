@@ -32,7 +32,8 @@ jobs:
         with:
           node-version: '22'
           cache: pnpm
-      - run: corepack enable
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@9 --activate
       - name: 生成四端注入 (prepare.mjs)
         run: node scripts/prepare.mjs
       - name: 安装依赖
@@ -60,7 +61,8 @@ jobs:
         with:
           node-version: '22'
           cache: pnpm
-      - run: corepack enable
+      - name: Setup pnpm
+        run: corepack enable && corepack prepare pnpm@9 --activate
       - name: 安装前端依赖
         run: pnpm install --no-frozen-lockfile
       - name: 组合发布 (release.sh · 核心+mini+mobile；desktop 需 Rust/webkit 本地构建)
