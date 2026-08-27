@@ -6,7 +6,8 @@ import cn.huntercat.lieshouboot.user.domain.User;
 import cn.huntercat.lieshouboot.user.domain.UserRepository;
 import cn.huntercat.lieshouboot.user.domain.VerificationCode;
 import cn.huntercat.lieshouboot.user.service.VerificationService;
-import cn.huntercat.lieshouboot.user.web.dto.UserAuthView;
+import cn.huntercat.lieshou.framework.auth.UserAuthPort;
+import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
  * <p>原微服务版由 Feign + Nacos 跨服务调用；单体版同进程直调，无网络/序列化开销。
  */
 @Component
-public class UserAuthAdapter implements UserAuthClient {
+public class UserAuthAdapter implements UserAuthPort {
 
   private final UserRepository userRepo;
   private final TenantRepository tenantRepo;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import cn.huntercat.lieshouboot.common.web.TenantHeaders;
+import cn.huntercat.lieshou.framework.common.web.TenantHeaders;
 import cn.huntercat.lieshouboot.user.domain.AuditLog;
 import cn.huntercat.lieshouboot.user.domain.Role;
 import cn.huntercat.lieshouboot.user.domain.RoleRepository;
@@ -24,7 +24,7 @@ import cn.huntercat.lieshouboot.user.domain.TenantRepository;
 import cn.huntercat.lieshouboot.user.domain.User;
 import cn.huntercat.lieshouboot.user.domain.UserRepository;
 import cn.huntercat.lieshouboot.user.service.AuditService;
-import cn.huntercat.lieshouboot.user.web.dto.UserAuthView;
+import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

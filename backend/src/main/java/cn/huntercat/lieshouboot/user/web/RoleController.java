@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
-import cn.huntercat.lieshouboot.common.audit.Audited;
-import cn.huntercat.lieshouboot.common.security.RequiresPermission;
+import cn.huntercat.lieshou.framework.common.audit.Audited;
+import cn.huntercat.lieshou.framework.common.security.RequiresPermission;
 import cn.huntercat.lieshouboot.user.domain.Role;
 import cn.huntercat.lieshouboot.user.domain.RoleRepository;
 import io.swagger.v3.oas.annotations.Operation;

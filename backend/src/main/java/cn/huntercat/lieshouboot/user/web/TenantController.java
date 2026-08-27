@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import cn.huntercat.lieshouboot.common.web.TenantHeaders;
+import cn.huntercat.lieshou.framework.common.web.TenantHeaders;
 import cn.huntercat.lieshouboot.user.domain.AuditLog;
 import cn.huntercat.lieshouboot.user.domain.Tenant;
 import cn.huntercat.lieshouboot.user.domain.TenantRepository;

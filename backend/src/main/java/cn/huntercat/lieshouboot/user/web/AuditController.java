@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.huntercat.lieshouboot.common.web.TenantHeaders;
+import cn.huntercat.lieshou.framework.common.web.TenantHeaders;
 import cn.huntercat.lieshouboot.user.domain.AuditLog;
 import cn.huntercat.lieshouboot.user.domain.AuditLog.Action;
 import cn.huntercat.lieshouboot.user.domain.AuditLogRepository;

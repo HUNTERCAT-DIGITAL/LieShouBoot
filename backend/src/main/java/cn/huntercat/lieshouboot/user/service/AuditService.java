@@ -6,8 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import cn.huntercat.lieshouboot.common.audit.AuditEvent;
-import cn.huntercat.lieshouboot.common.audit.AuditRecorder;
+import cn.huntercat.lieshou.framework.common.audit.AuditEvent;
+import cn.huntercat.lieshou.framework.common.audit.AuditRecorder;
 import cn.huntercat.lieshouboot.user.domain.AuditLog;
 import cn.huntercat.lieshouboot.user.domain.AuditLog.Action;
 import cn.huntercat.lieshouboot.user.domain.AuditLog.Outcome;
