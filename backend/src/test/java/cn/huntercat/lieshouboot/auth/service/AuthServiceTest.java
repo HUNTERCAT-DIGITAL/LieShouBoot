@@ -12,7 +12,7 @@ import cn.huntercat.lieshou.framework.auth.AuthService;
 import cn.huntercat.lieshou.framework.auth.JwtService;
 import cn.huntercat.lieshou.framework.auth.UserAuthPort;
 import cn.huntercat.lieshou.framework.auth.dto.AuthDtos.LoginRequest;
-import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
+import cn.huntercat.lieshou.framework.common.dto.UserAuthView;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,35 +1,45 @@
 package cn.huntercat.lieshouboot.auth.adapter;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import cn.huntercat.lieshou.framework.auth.UserAuthPort;
+import cn.huntercat.lieshou.framework.common.api.BaseException;
+import cn.huntercat.lieshou.framework.common.api.ErrorCode;
+import cn.huntercat.lieshou.framework.common.dto.UserAuthView;
 import cn.huntercat.lieshou.framework.domain.Tenant;
 import cn.huntercat.lieshou.framework.domain.TenantRepository;
 import cn.huntercat.lieshou.framework.domain.User;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
 import cn.huntercat.lieshou.framework.domain.VerificationCode;
+import cn.huntercat.lieshou.framework.service.UserService;
 import cn.huntercat.lieshou.framework.service.VerificationService;
-import cn.huntercat.lieshou.framework.auth.UserAuthPort;
-import cn.huntercat.lieshou.framework.auth.dto.UserAuthView;
-import java.time.Instant;
-import java.util.List;
 import java.util.Map;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 /**
- * auth → user 本地调用适配器（单体现状：同进程直调 user 模块，实现 framework UserAuthPort）。
+ * 单体 UserAuthPort 适配（装配层 · ADR-0044 阶段 3 收敛）.
+ *
+ * <p>认证查询 / 创建用户 / lastLogin 回写统一走 framework-service {@link UserService}
+ * （与 admin 建用户同源，消除端口版分叉）；验证码 / 租户选项 / 改密为轻量直连。
+ * 端口语义保持：用户不存在返回 null（AuthService 据此抛 USER_NOT_FOUND），
+ * 租户停用抛 TENANT_DISABLED（403，阻断登录——与 REST 认证视图一致）。
  */
 @Component
 public class UserAuthAdapter implements UserAuthPort {
 
+  private final UserService userService;
   private final UserRepository userRepo;
   private final TenantRepository tenantRepo;
   private final VerificationService verificationService;
   private final PasswordEncoder passwordEncoder;
 
   public UserAuthAdapter(
+      UserService userService,
       UserRepository userRepo,
       TenantRepository tenantRepo,
       VerificationService verificationService,
       PasswordEncoder passwordEncoder) {
+    this.userService = userService;
     this.userRepo = userRepo;
     this.tenantRepo = tenantRepo;
     this.verificationService = verificationService;
@@ -38,14 +48,15 @@ public class UserAuthAdapter implements UserAuthPort {
 
   @Override
   public UserAuthView findByTenantAndUsername(String tenantCode, String username) {
-    Tenant tenant = tenantRepo.findByCode(tenantCode).orElse(null);
-    if (tenant == null) {
-      throw new IllegalArgumentException("TENANT_NOT_FOUND");
+    try {
+      return userService.authViewByTenantAndUsername(tenantCode, username);
+    } catch (BaseException e) {
+      // NOT_FOUND → null（端口语义）；TENANT_DISABLED 透传（403 阻断登录）
+      if (ErrorCode.NOT_FOUND.name().equals(e.errorCode())) {
+        return null;
+      }
+      throw e;
     }
-    return userRepo
-        .findByTenantIdAndUsername(tenant.getId(), username)
-        .map(this::toAuthView)
-        .orElse(null);
   }
 
   @Override
@@ -68,10 +79,7 @@ public class UserAuthAdapter implements UserAuthPort {
 
   @Override
   public void markLastLogin(Long id) {
-    userRepo.findById(id).ifPresent(u -> {
-      u.setLastLoginAt(Instant.now());
-      userRepo.save(u);
-    });
+    userService.markLastLogin(id);
   }
 
   @Override
@@ -93,12 +101,26 @@ public class UserAuthAdapter implements UserAuthPort {
 
   @Override
   public UserAuthView findByPhone(String phone) {
-    return userRepo.findByPhone(phone).map(this::toAuthView).orElse(null);
+    try {
+      return userService.authViewByPhone(phone);
+    } catch (BaseException e) {
+      if (ErrorCode.NOT_FOUND.name().equals(e.errorCode())) {
+        return null;
+      }
+      throw e;
+    }
   }
 
   @Override
   public UserAuthView findByEmail(String email) {
-    return userRepo.findByEmail(email).map(this::toAuthView).orElse(null);
+    try {
+      return userService.authViewByEmail(email);
+    } catch (BaseException e) {
+      if (ErrorCode.NOT_FOUND.name().equals(e.errorCode())) {
+        return null;
+      }
+      throw e;
+    }
   }
 
   @Override
@@ -107,53 +129,27 @@ public class UserAuthAdapter implements UserAuthPort {
     if (username == null || username.isBlank()) {
       throw new IllegalArgumentException("USERNAME_REQUIRED");
     }
-    String password = body.get("password");
-    String displayName =
-        body.get("displayName") == null ? username : body.get("displayName");
-    String tenantCode = body.getOrDefault("tenantCode", "default");
-    Tenant tenant =
-        tenantRepo
-            .findByCode(tenantCode)
-            .orElseThrow(() -> new IllegalArgumentException("TENANT_NOT_FOUND"));
-    Long tenantId = tenant.getId();
-    if (userRepo.existsByTenantIdAndUsername(tenantId, username)) {
-      throw new IllegalArgumentException("USERNAME_TAKEN");
-    }
-    User u = new User(tenantId, username, displayName, passwordEncoder.encode(password));
-    if (body.get("phone") != null) {
-      u.setPhone(body.get("phone"));
-    }
-    if (body.get("email") != null) {
-      u.setEmail(body.get("email"));
-    }
-    u = userRepo.save(u);
+    UserService.CreateResult result =
+        userService.create(
+            username,
+            body.getOrDefault("displayName", username),
+            body.get("password"),
+            body.get("email"),
+            body.get("phone"),
+            body.get("tenantCode"),
+            body.get("inviteCode"),
+            null);
+    User u = result.user();
     return Map.of("id", u.getId(), "tenantId", u.getTenantId() == null ? -1L : u.getTenantId());
   }
 
   @Override
   public void updateUserPassword(Long id, Map<String, String> body) {
-    User u = userRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("USER_NOT_FOUND"));
+    User u =
+        userRepo
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("USER_NOT_FOUND"));
     u.setPasswordHash(passwordEncoder.encode(body.get("password")));
     userRepo.save(u);
-  }
-
-  /** 组装鉴权视图（与 UserController.toAuthView 同构） */
-  private UserAuthView toAuthView(User u) {
-    Tenant tenant = tenantRepo.findById(u.getTenantId()).orElse(null);
-    List<String> roleCodes =
-        u.getRoles() == null || u.getRoles().isEmpty()
-            ? List.of("USER")
-            : u.getRoles().stream().map(r -> r.getCode()).toList();
-    return new UserAuthView(
-        u.getId(),
-        u.getTenantId(),
-        tenant == null ? null : tenant.getCode(),
-        tenant == null ? null : tenant.getName(),
-        tenant == null || tenant.getEdition() == null ? null : tenant.getEdition().name(),
-        u.getUsername(),
-        u.getDisplayName(),
-        u.getPasswordHash(),
-        roleCodes,
-        u.getStatus() == null ? "ACTIVE" : u.getStatus().name());
   }
 }
