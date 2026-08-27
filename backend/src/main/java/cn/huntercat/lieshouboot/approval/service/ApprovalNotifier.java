@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.huntercat.lieshou.framework.domain.ApprovalRequest;
+import cn.huntercat.lieshou.framework.approval.domain.ApprovalRequest;
 import cn.huntercat.lieshou.framework.approval.port.UserQueryPort;
 import cn.huntercat.lieshou.framework.approval.port.UserView;
 import java.util.Optional;

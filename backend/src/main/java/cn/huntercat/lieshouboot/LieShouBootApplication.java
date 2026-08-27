@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * gateway+user+admin+auth+approval 重组为包内模块，Feign 调用改为本地 Service 调用）。
  */
 @SpringBootApplication
-@EntityScan(basePackages = {"cn.huntercat.lieshouboot", "cn.huntercat.lieshou.framework.domain"})
-@EnableJpaRepositories(basePackages = {"cn.huntercat.lieshouboot", "cn.huntercat.lieshou.framework.domain"})
+@EntityScan(basePackages = {"cn.huntercat.lieshouboot", "cn.huntercat.lieshou.framework.domain", "cn.huntercat.lieshou.framework.approval.domain"})
+@EnableJpaRepositories(basePackages = {"cn.huntercat.lieshouboot", "cn.huntercat.lieshou.framework.domain", "cn.huntercat.lieshou.framework.approval.domain"})
 public class LieShouBootApplication {
 
   public static void main(String[] args) {
