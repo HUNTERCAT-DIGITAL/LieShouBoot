@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.huntercat.lieshou.framework.common.web.TenantHeaders;
 import cn.huntercat.lieshou.framework.domain.Notification;
-import cn.huntercat.lieshouboot.user.service.NotificationService;
+import cn.huntercat.lieshou.framework.service.NotificationService;
 
 /**
  * 站内通知（开源版消息通知模块 · 单体装配）.
