@@ -13,7 +13,7 @@
 
   <groupId>cn.huntercat</groupId>
   <artifactId>lieshouboot-backend</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <name>lieShouBoot-backend</name>
   <description>猎手云开源单体版（LieShouBoot）后端 — 单应用：认证 / 用户 / 管理 / 审批</description>
 
@@ -28,27 +28,27 @@
     <dependency>
       <groupId>cn.huntercat</groupId>
       <artifactId>framework-auth</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>cn.huntercat</groupId>
       <artifactId>framework-domain</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>cn.huntercat</groupId>
       <artifactId>framework-service</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>cn.huntercat</groupId>
       <artifactId>framework-approval</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>cn.huntercat</groupId>
       <artifactId>framework-common</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
