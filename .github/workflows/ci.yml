@@ -36,13 +36,14 @@ jobs:
         run: corepack enable && corepack prepare pnpm@9.12.0 --activate
       - name: 生成四端注入 (prepare.mjs)
         run: node scripts/prepare.mjs
-      - name: 安装依赖
-        run: pnpm install --no-frozen-lockfile --force
-      - name: Debug open/ui deps（临时）
+      - name: 安装依赖（根 workspace + 各端独立 workspace）
         run: |
-          ls open/ui/node_modules/echarts 2>/dev/null && echo "HAS echarts" || echo "NO echarts"
-          ls open/ui/node_modules 2>/dev/null | head -5 || echo "NO node_modules dir"
-          pnpm -r --filter @lieshoucloud/ui list --depth 0 2>/dev/null | head -5 || true
+          pnpm install --no-frozen-lockfile --force
+          for app in admin desktop mobile mini-program; do
+            if [ -f "apps/$app/pnpm-workspace.yaml" ]; then
+              (cd "apps/$app" && pnpm install --no-frozen-lockfile --force)
+            fi
+          done
       - name: typecheck
         run: |
           (cd apps/admin && pnpm typecheck)
