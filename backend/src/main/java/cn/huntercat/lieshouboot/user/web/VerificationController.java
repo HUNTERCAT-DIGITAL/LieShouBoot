@@ -17,7 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Map;
 
 /**
- * 验证码端点（service-to-service，auth-service 通过 Feign 调用）.
+ * 验证码端点（auth 模块本地调用）.
  *
  * <p>完整路径：{@code /api/users/verification/**}。前端不直接调用，走 {@code /api/auth/send-code} 等。
  */

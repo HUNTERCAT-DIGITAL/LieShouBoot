@@ -340,8 +340,8 @@ public class UserController {
     return tenantHeader == null || u.getTenantId().equals(tenantHeader);
   }
 
-  /** 给 admin-service Feign 用：根据 username 查 User（不含密码 hash）. */
-  @Operation(summary = "Get user by username (admin Feign internal)")
+  /** 给 admin 模块本地调用：根据 username 查 User（不含密码 hash）. */
+  @Operation(summary = "Get user by username (admin local)")
   @ApiResponse(responseCode = "200", description = "User found")
   @ApiResponse(responseCode = "404", description = "User not found")
   @GetMapping("/by-username/{username}")
@@ -353,7 +353,7 @@ public class UserController {
   }
 
   /**
-   * Phase 5 + Phase 8: 给 auth-service Feign 用：按租户 + username 查鉴权视图（含 passwordHash）.
+   * Phase 5 + Phase 8: 给 auth 模块本地调用：按租户 + username 查鉴权视图（含 passwordHash）.
    *
    * <p>仅 service-to-service 调用；通过 gateway 白名单 {@code /api/users/auth/**} 路径实现.
    */
@@ -488,7 +488,7 @@ public class UserController {
     return ResponseEntity.noContent().build();
   }
 
-  /** Phase 5: 占位 health 端点（被 admin-service 通过 Feign + circuit breaker 调用）. */
+  /** Phase 5: 占位 health 端点（admin 模块本地调用）. */
   @Operation(summary = "Health probe")
   @GetMapping("/_health")
   public Map<String, String> health() {

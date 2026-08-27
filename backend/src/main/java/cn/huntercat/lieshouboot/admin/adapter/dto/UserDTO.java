@@ -1,4 +1,4 @@
-package cn.huntercat.lieshouboot.admin.feign.dto;
+package cn.huntercat.lieshouboot.admin.adapter.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;

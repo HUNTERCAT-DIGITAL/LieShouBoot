@@ -1,21 +1,19 @@
-package cn.huntercat.lieshouboot.admin.feign;
+package cn.huntercat.lieshouboot.admin.adapter;
 
-import cn.huntercat.lieshouboot.admin.feign.dto.UserDTO;
+import cn.huntercat.lieshouboot.admin.adapter.dto.UserDTO;
 import cn.huntercat.lieshou.framework.domain.User;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
 import org.springframework.stereotype.Component;
 
 /**
- * admin → user 本地调用适配器（单体重组：替代原 Feign Client + fallback）。
- *
- * <p>微服务版 Feign + Resilience4j 熔断降级；单体版同进程直调，无需 fallback。
+ * admin → user 本地调用适配器（单体现状：同进程直调 user 模块 Repository）。
  */
 @Component
-public class UserFeignAdapter implements UserFeignClient {
+public class UserQueryAdapter implements UserQueryClient {
 
   private final UserRepository userRepo;
 
-  public UserFeignAdapter(UserRepository userRepo) {
+  public UserQueryAdapter(UserRepository userRepo) {
     this.userRepo = userRepo;
   }
 

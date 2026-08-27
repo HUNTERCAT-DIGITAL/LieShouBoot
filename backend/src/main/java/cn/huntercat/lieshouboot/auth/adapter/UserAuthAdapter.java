@@ -1,4 +1,4 @@
-package cn.huntercat.lieshouboot.auth.feign;
+package cn.huntercat.lieshouboot.auth.adapter;
 
 import cn.huntercat.lieshou.framework.domain.Tenant;
 import cn.huntercat.lieshou.framework.domain.TenantRepository;
@@ -15,9 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * auth → user 本地调用适配器（单体重组：替代原 Feign Client，直接调用 user 模块）。
- *
- * <p>原微服务版由 Feign + Nacos 跨服务调用；单体版同进程直调，无网络/序列化开销。
+ * auth → user 本地调用适配器（单体现状：同进程直调 user 模块，实现 framework UserAuthPort）。
  */
 @Component
 public class UserAuthAdapter implements UserAuthPort {
