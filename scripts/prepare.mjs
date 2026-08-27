@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 /**
- * LieShouBoot · prepare.mjs
- * 生成 admin-web 内的版别注入文件 editions/boot.extra.ts，
- * 把 LieShouBoot 品牌 + 专属门户（packages/boot）注入到通用前端。
+ * LieShouBoot · prepare.mjs（自动装配器 · 约定优于配置）
  *
- * 参照客户仓 deploy:prepare.mjs 模式：注入文件生成在 submodule 内，
- * 不随主仓提交，部署时运行本脚本再生。
- * 用相对路径引用 packages/boot（不依赖 admin-web 的 @lieshoucloud/<client> alias——
- * 该 alias 对客户仓根挂载成立，而 LieShouBoot 挂载在 apps/admin，路径不同）。
+ * 扫描 packages/boot/src/features/ 的 admin 页面，自动生成 admin-web 的
+ * editions/boot.extra.ts（品牌 + 门户 + 专属路由），零手配。
  *
+ * 约定：features/<name>/ui/admin/<X>.tsx 默认导出 = 专属页面；
+ *       features/portal/ui/admin/BootPortal.tsx 特殊 = 门户（portal 槽位）。
  * 用法: node scripts/prepare.mjs [仓库根]
  */
 import fs from 'node:fs';
@@ -17,6 +15,7 @@ import path from 'node:path';
 const root = path.resolve(process.argv[2] ?? '.');
 const editionsDir = path.join(root, 'apps/admin/src/config/editions');
 const target = path.join(editionsDir, 'boot.extra.ts');
+const featuresDir = path.join(root, 'packages/boot/src/features');
 const bootSrc = path.join(root, 'packages/boot/src');
 
 if (!fs.existsSync(bootSrc)) {
@@ -24,22 +23,47 @@ if (!fs.existsSync(bootSrc)) {
   process.exit(1);
 }
 
-// editions/ → packages/boot/src 的相对路径（如 ../../../../packages/boot/src）
+// 1) 扫描 features（约定：ui/admin/*.tsx）
+const adminPages = [];
+if (fs.existsSync(featuresDir)) {
+  for (const feat of fs.readdirSync(featuresDir)) {
+    const uiAdmin = path.join(featuresDir, feat, 'ui', 'admin');
+    if (!fs.existsSync(uiAdmin)) continue;
+    for (const f of fs.readdirSync(uiAdmin).filter((x) => x.endsWith('.tsx') || x.endsWith('.tsx'))) {
+      const name = f.replace(/\.tsx?$/, '');
+      adminPages.push({ feat, name, file: `${feat}/ui/admin/${name}` });
+    }
+  }
+}
+
+// 2) 相对路径（editions/ → packages/boot/src）
 const relBoot = path.relative(editionsDir, bootSrc).replace(/\\/g, '/');
-const relPortal = `${relBoot}/portal/BootPortal`;
+const relPortal = `${relBoot}/features/portal/ui/admin/BootPortal`;
+
+// 3) 生成注入文件
+const extraRoutes = adminPages
+  .filter((p) => p.feat !== 'portal')
+  .map(
+    (p) => `  { path: '/${p.feat}', load: () => import('${relBoot}/features/${p.file}'), menu: { name: '${p.name}' } },`
+  )
+  .join('\n');
 
 const content = `/**
- * boot.extra.ts · 由 LieShouBoot scripts/prepare.mjs 生成，勿手改。
- * 把 LieShouBoot 品牌 + 专属门户注入通用前端（getEdition 叠加本 extra）。
+ * boot.extra.ts · 由 LieShouBoot scripts/prepare.mjs 自动生成，勿手改。
+ * 扫描 features/ 自动装配：品牌 + 门户 + 专属路由。
  */
 import { bootBrand } from '${relBoot}';
 
 export default {
   ...bootBrand,
   portal: { load: () => import('${relPortal}') },
+  extraRoutes: [
+${extraRoutes}
+  ],
 };
 `;
 
 fs.mkdirSync(editionsDir, { recursive: true });
 fs.writeFileSync(target, content);
-console.log(`✅ 已生成 ${target}\n   boot 引用: ${relBoot}`);
+console.log(`✅ 已生成 ${target}`);
+console.log(`   features 装配: ${adminPages.map((p) => p.feat).join(', ') || '无'}`);
