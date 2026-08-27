@@ -1,0 +1,15 @@
+[submodule "apps/admin"]
+	path = apps/admin
+	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-admin-web.git
+[submodule "apps/desktop"]
+	path = apps/desktop
+	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-desktop.git
+[submodule "apps/mobile"]
+	path = apps/mobile
+	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-mobile.git
+[submodule "apps/mini-program"]
+	path = apps/mini-program
+	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-mini-program.git
+[submodule "open"]
+	path = open
+	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-web.git

@@ -1,0 +1,74 @@
+# ============================================================
+# LieShouBoot（猎手云开源单体版）· 单应用配置
+# 无 Nacos / 无网关：单实例 + 单库，默认 dev profile
+# ============================================================
+spring:
+  application:
+    name: lieshouboot
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${POSTGRES_DB:lieshouboot}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
+  jpa:
+    hibernate:
+      # schema 由 Flyway 管理（ADR-0021），Hibernate 只做 validate
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration,classpath:db/seed
+    baseline-on-migrate: false
+    validate-on-migrate: true
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  port: ${PORT:8080}
+
+# ============================================================
+# JWT（与商业版 auth-service 同款：HS256 双 token）
+# ============================================================
+app:
+  jwt:
+    secret: ${JWT_SECRET:please-change-me-in-production-min-32-bytes-12345}
+    access-ttl-seconds: ${JWT_ACCESS_TTL:1800}      # 30 min
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL:604800}  # 7 days
+    issuer: ${JWT_ISSUER:lieshouboot-dev}
+
+# ============================================================
+# SpringDoc OpenAPI
+# ============================================================
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  packages-to-scan: cn.huntercat.lieshouboot
+  show-actuator: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: INFO
+    cn.huntercat.lieshouboot: DEBUG
