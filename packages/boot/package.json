@@ -2,7 +2,7 @@
   "name": "@lieshoucloud/boot",
   "version": "0.1.0",
   "private": true,
-  "description": "LieShouBoot 开源单体版专属增量包：品牌配置 + 专属产品介绍门户页",
+  "description": "lieshou-boot 开源单体版专属增量包：品牌配置 + 专属产品介绍门户页",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "peerDependencies": {

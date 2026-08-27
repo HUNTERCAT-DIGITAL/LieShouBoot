@@ -5,8 +5,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!--
-    LieShouBoot 聚合构建（submodule 引用模式）：
-    framework（→ LieShou-framework submodule） + backend（全栈单体）
+    lieshou-boot 聚合构建（submodule 引用模式）：
+    framework（→ lieshou-framework submodule） + backend（全栈单体）
     一次构建：mvn -f pom.xml package（reactor 内解析 framework-* 依赖，无需 install）
   -->
   <groupId>cn.huntercat</groupId>
@@ -14,7 +14,7 @@
   <version>0.1.0</version>
   <packaging>pom</packaging>
 
-  <name>LieShouBoot (aggregator)</name>
+  <name>lieshou-boot (aggregator)</name>
   <description>猎手云开源单体版 · 聚合构建（framework submodule + backend）</description>
 
   <modules>

@@ -15,7 +15,7 @@
   <artifactId>lieshouboot-backend</artifactId>
   <version>0.1.0</version>
   <name>lieShouBoot-backend</name>
-  <description>猎手云开源单体版（LieShouBoot）后端 — 单应用：认证 / 用户 / 管理 / 审批</description>
+  <description>猎手云开源单体版（lieshou-boot）后端 — 单应用：认证 / 用户 / 管理 / 审批</description>
 
   <properties>
     <java.version>21</java.version>

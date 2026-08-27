@@ -1,5 +1,5 @@
 # ============================================================
-# LieShouBoot · 一键启动编排（全栈单体）
+# lieshou-boot · 一键启动编排（全栈单体）
 #   postgres + backend(单体: API + 内嵌前端 static)
 # 前端 build 产物已打进 backend jar（方案 C 全栈单体）
 # 用法: docker compose up -d --build
