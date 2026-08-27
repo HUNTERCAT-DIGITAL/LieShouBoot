@@ -8,7 +8,6 @@ import cn.huntercat.lieshou.framework.common.api.BaseException;
 import cn.huntercat.lieshou.framework.common.api.ErrorCode;
 import cn.huntercat.lieshou.framework.common.dto.UserAuthView;
 import cn.huntercat.lieshou.framework.domain.Tenant;
-import cn.huntercat.lieshou.framework.domain.TenantRepository;
 import cn.huntercat.lieshou.framework.domain.User;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
 import cn.huntercat.lieshou.framework.domain.VerificationCode;
@@ -29,19 +28,16 @@ public class UserAuthAdapter implements UserAuthPort {
 
   private final UserService userService;
   private final UserRepository userRepo;
-  private final TenantRepository tenantRepo;
   private final VerificationService verificationService;
   private final PasswordEncoder passwordEncoder;
 
   public UserAuthAdapter(
       UserService userService,
       UserRepository userRepo,
-      TenantRepository tenantRepo,
       VerificationService verificationService,
       PasswordEncoder passwordEncoder) {
     this.userService = userService;
     this.userRepo = userRepo;
-    this.tenantRepo = tenantRepo;
     this.verificationService = verificationService;
     this.passwordEncoder = passwordEncoder;
   }
@@ -61,20 +57,7 @@ public class UserAuthAdapter implements UserAuthPort {
 
   @Override
   public java.util.List<java.util.Map<String, Object>> tenantOptions(String username) {
-    return userRepo
-        .findByUsername(username)
-        .map(
-            u -> {
-              Tenant t = tenantRepo.findById(u.getTenantId()).orElse(null);
-              if (t == null) return java.util.List.<java.util.Map<String, Object>>of();
-              java.util.Map<String, Object> opt = new java.util.HashMap<>();
-              opt.put("tenantId", t.getId());
-              opt.put("tenantCode", t.getCode());
-              opt.put("tenantName", t.getName());
-              opt.put("tenantEdition", t.getEdition() == null ? "GENERIC" : t.getEdition().name());
-              return java.util.List.of(opt);
-            })
-        .orElse(java.util.List.of());
+    return userService.tenantOptions(username);
   }
 
   @Override

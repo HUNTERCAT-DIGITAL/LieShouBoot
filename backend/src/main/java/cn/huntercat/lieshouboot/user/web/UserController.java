@@ -213,6 +213,18 @@ public class UserController {
   }
 
   /**
+   * 跨租户查该 username 可登录的租户（供登录页同用户名多租户选择）.
+   * 仅 service-to-service；gateway 白名单 {@code /api/users/auth/**} 已覆盖。
+   */
+  @Operation(summary = "Tenant options by username (service-to-service)")
+  @GetMapping("/auth/tenant-options")
+  public ResponseEntity<?> tenantOptions(
+      @Parameter(description = "Username") @org.springframework.web.bind.annotation.RequestParam
+          String username) {
+    return ResponseEntity.ok(userService.tenantOptions(username));
+  }
+
+  /**
    * Phase 5 + Phase 8: 给 auth 模块本地调用：按租户 + username 查鉴权视图（含 passwordHash）.
    *
    * <p>仅 service-to-service 调用；通过 gateway 白名单 {@code /api/users/auth/**} 路径实现.
