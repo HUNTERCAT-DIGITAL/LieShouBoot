@@ -3,3 +3,6 @@ node_modules/
 .env
 *.log
 .DS_Store
+
+# 前端内嵌产物（由 scripts/build-monolith.sh 生成）
+backend/src/main/resources/static/

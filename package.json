@@ -1,0 +1,9 @@
+{
+  "name": "lieshouboot",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build:frontend": "cd apps/admin && pnpm build",
+    "prepare:boot": "node scripts/prepare.mjs"
+  }
+}

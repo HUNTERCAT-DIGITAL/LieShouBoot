@@ -1,0 +1,49 @@
+# ============================================================
+# LieShouBoot · 一键启动编排（全栈单体）
+#   postgres + backend(单体: API + 内嵌前端 static)
+# 前端 build 产物已打进 backend jar（方案 C 全栈单体）
+# 用法: docker compose up -d --build
+# ============================================================
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: lieshouboot-postgres
+    environment:
+      POSTGRES_DB: lieshouboot
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build: ./backend
+    container_name: lieshouboot-backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      POSTGRES_DB: lieshouboot
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PORT: 8080
+      JWT_SECRET: ${JWT_SECRET:-please-change-me-in-production-min-32-bytes-12345}
+      JWT_ISSUER: ${JWT_ISSUER:-lieshouboot-dev}
+    ports:
+      - "${BACKEND_PORT:-8095}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  pgdata:

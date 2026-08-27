@@ -36,17 +36,19 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             auth ->
                 auth
-                    // 整个 auth-service 端点都 permitAll（gateway 外层已验 JWT）
-                    // /me 端点由 AuthController 手动解析 Authorization header;
-                    // 缺/无效 token 抛 BadCredentialsException, 由 @ExceptionHandler 返 401.
+                    // 认证公开端点
                     .requestMatchers("/api/auth/**")
                     .permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                     .permitAll()
                     .requestMatchers("/actuator/health", "/actuator/info")
                     .permitAll()
+                    // 业务 API 需鉴权（全栈单体无 gateway，由各 Controller 从 Bearer token 解析）
+                    .requestMatchers("/api/**")
+                    .authenticated()
+                    // 全栈单体：前端静态资源 + SPA 路由全部公开（登录态由前端 AuthGuard 控制）
                     .anyRequest()
-                    .authenticated())
+                    .permitAll())
         .httpBasic(b -> b.disable())
         .formLogin(f -> f.disable());
     return http.build();
