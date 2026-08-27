@@ -38,6 +38,11 @@ jobs:
         run: node scripts/prepare.mjs
       - name: 安装依赖
         run: pnpm install --no-frozen-lockfile --force
+      - name: Debug open/ui deps（临时）
+        run: |
+          ls open/ui/node_modules/echarts 2>/dev/null && echo "HAS echarts" || echo "NO echarts"
+          ls open/ui/node_modules 2>/dev/null | head -5 || echo "NO node_modules dir"
+          pnpm -r --filter @lieshoucloud/ui list --depth 0 2>/dev/null | head -5 || true
       - name: typecheck
         run: |
           (cd apps/admin && pnpm typecheck)
