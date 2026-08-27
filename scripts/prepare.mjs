@@ -49,7 +49,7 @@ const rel = (from, to) => path.relative(from, to).replace(/\\/g, '/');
  * boot.extra.ts · 由 LieShouBoot scripts/prepare.mjs 自动生成，勿手改。
  * 自动装配 features：品牌 + 门户 + 专属路由。
  */
-import { bootBrand } from '${relBoot}';
+import { bootBrand } from '${relBoot}/boot';
 
 export default {
   ...bootBrand,
@@ -118,7 +118,7 @@ ${entries}
  * 内联 Taro UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { Text, View } from '@tarojs/components';
-import { bootBrand } from '${relBoot}';
+import { bootBrand } from '${relBoot}/boot';
 
 export default function BootWorkspace() {
   return (
@@ -158,7 +158,7 @@ export default {
  * 内联 RN UI；品牌文案来自 packages/boot（bootBrand 单源）。
  */
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { bootBrand } from '${relBoot}';
+import { bootBrand } from '${relBoot}/boot';
 
 export default function BootWorkspace() {
   return (
