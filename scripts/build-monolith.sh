@@ -16,8 +16,8 @@ rm -rf "$ROOT/backend/src/main/resources/static"
 mkdir -p "$ROOT/backend/src/main/resources/static"
 cp -r "$ROOT/apps/admin/dist/"* "$ROOT/backend/src/main/resources/static/"
 
-echo "④ 打包后端（含内嵌前端）"
+echo "④ 打包后端（聚合构建：framework submodule + backend，含内嵌前端）"
 export JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-21-openjdk-amd64}
-(cd "$ROOT/backend" && mvn -B -ntp -DskipTests package)
+mvn -B -ntp -f "$ROOT/pom.xml" -DskipTests package
 
 echo "✅ 完成: backend/target/lieshouboot-backend-*.jar（单进程起全栈）"

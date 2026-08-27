@@ -18,12 +18,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Install LieShou-framework (上游同源唯一)
-        run: |
-          git clone --depth 1 https://github.com/HUNTERCAT-DIGITAL/LieShou-framework.git /tmp/framework
-          cd /tmp/framework && mvn -B -ntp -DskipTests install
-      - name: Backend test (mvn verify)
-        run: cd backend && mvn -B -ntp verify
+      - name: Backend test (聚合构建 · framework submodule + backend)
+        run: mvn -B -ntp -f pom.xml verify
 
   # —— 前端：自动装配 → 依赖 → 类型检查 ——
   frontend:
@@ -64,10 +60,6 @@ jobs:
           node-version: '22'
           cache: pnpm
       - run: corepack enable
-      - name: Install LieShou-framework
-        run: |
-          git clone --depth 1 https://github.com/HUNTERCAT-DIGITAL/LieShou-framework.git /tmp/framework
-          cd /tmp/framework && mvn -B -ntp -DskipTests install
       - name: 安装前端依赖
         run: pnpm install --no-frozen-lockfile
       - name: 组合发布 (release.sh · 核心+mini+mobile；desktop 需 Rust/webkit 本地构建)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    LieShouBoot 聚合构建（submodule 引用模式）：
+    framework（→ LieShou-framework submodule） + backend（全栈单体）
+    一次构建：mvn -f pom.xml package（reactor 内解析 framework-* 依赖，无需 install）
+  -->
+  <groupId>cn.huntercat</groupId>
+  <artifactId>lieshouboot</artifactId>
+  <version>0.1.0</version>
+  <packaging>pom</packaging>
+
+  <name>LieShouBoot (aggregator)</name>
+  <description>猎手云开源单体版 · 聚合构建（framework submodule + backend）</description>
+
+  <modules>
+    <module>framework</module>
+    <module>backend</module>
+  </modules>
+</project>

@@ -13,12 +13,12 @@ LieShou-framework（业务唯一源 · 0.1.0）→ backend 薄壳（Controller/A
 
 ## 关键约定
 
-- **业务改动**：改 LieShou-framework → `mvn install` → 本仓 bump 版本（勿在本仓改业务）
+- **业务改动**：改 `framework/`（submodule → LieShou-framework）→ 提交 framework 仓 → 本仓 bump submodule（业务契约归 framework）
 - **前端专属功能**：在 `packages/boot/src/features/` 加目录（ui/model/api 三层）→ `node scripts/prepare.mjs` 自动装配四端
 - **生成的注入文件勿提交**：`editions/boot.extra.ts`、`pages/boot/`、`app/(main)/boot/`（prepare.mjs 构建时生成）
 - **发布**：`./scripts/release.sh [--with-mini|--with-desktop|--with-mobile]` 组合打包；tag `v*` 触发 CI 发布
 - **端口**：8095（前后端同源）· dev 前端 5200 · DB 5433
-- **测试**：`cd backend && mvn verify`（framework 需先本地 install）
+- **测试**：`mvn -f pom.xml verify`（聚合构建，framework submodule 一次构建）
 
 ## 危险操作
 

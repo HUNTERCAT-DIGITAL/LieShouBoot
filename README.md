@@ -63,11 +63,11 @@ docker compose up -d --build
 ### 后端（单体薄壳）
 
 ```bash
-cd backend && mvn -B -ntp -DskipTests package   # Java 21 + Maven；依赖本地已 install 的 framework 0.1.0
-java -jar target/lieshouboot-backend-*.jar       # PORT=8095 DB_PORT=5433 可覆盖
+mvn -B -ntp -f pom.xml -DskipTests package       # 聚合构建（framework submodule + backend）
+java -jar backend/target/lieshouboot-backend-*.jar  # PORT=8095 DB_PORT=5433 可覆盖
 ```
 
-> 业务改动：在 LieShou-framework 进行 → `mvn install` → 本仓 bump 版本。
+> 业务改动：直接改 `framework/`（submodule → LieShou-framework）→ 提交 framework 仓 → 本仓 bump submodule。
 
 ### 前端（admin-web 独立 dev · 可选）
 

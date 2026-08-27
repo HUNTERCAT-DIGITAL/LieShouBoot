@@ -13,3 +13,6 @@
 [submodule "open"]
 	path = open
 	url = git@github.com:HUNTERCAT-DIGITAL/LieShouCloud-web.git
+[submodule "framework"]
+	path = framework
+	url = https://github.com/HUNTERCAT-DIGITAL/LieShou-framework.git
