@@ -15,8 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuService {
 
-  /** 租户内业务权限码（非值班员；审计入口走 tenant:manage，此处仅占位推导） */
-  private static final List<String> TENANT_BIZ = List.of("approval:use", "crm:use", "finance:use", "inventory:use");
+  /**
+   * 租户内业务权限码（非值班员；与前端 access.ts derivePermissions 的 tenantBiz 完全一致）.
+   *
+   * ⚠️ 单一事实源：后端 MenuService 是权威（ADR-0024 后端裁决），
+   * 前端 access.ts 仅保留降级兜底副本（菜单接口失败时本地过滤），两端映射必须保持一致。
+   */
+  private static final List<String> TENANT_BIZ =
+      List.of("approval:use", "crm:use", "finance:use", "inventory:use", "audit:read");
 
   /** 从 X-User-Roles header 推导权限码集合（对齐前端 derivePermissions 角色分支） */
   public List<String> derivePermissions(String rolesHeader) {
