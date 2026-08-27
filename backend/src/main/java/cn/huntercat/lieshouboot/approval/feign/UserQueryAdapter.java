@@ -1,6 +1,7 @@
 package cn.huntercat.lieshouboot.approval.feign;
 
 import cn.huntercat.lieshou.framework.domain.User;
+import cn.huntercat.lieshou.framework.approval.port.UserView;
 import cn.huntercat.lieshou.framework.domain.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
  * approval → user 本地调用适配器（单体重组：替代原 Feign Client）。
  */
 @Component
-public class UserQueryAdapter implements UserQueryClient {
+public class UserQueryAdapter implements cn.huntercat.lieshou.framework.approval.port.UserQueryPort {
 
   private final UserRepository userRepo;
 
