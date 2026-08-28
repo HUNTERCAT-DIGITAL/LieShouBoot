@@ -185,4 +185,22 @@ const styles = StyleSheet.create({
   console.log('✅ mobile  : app/(main)/boot/workspace.tsx 薄壳');
 }
 
+// admin-web tsconfig.boot.json（平台仓已移除 @lieshoucloud/boot paths —— 单体版注入物补齐，与客户仓 tsconfig.<client>.json 同模式）
+{
+  const tsconfigPath = path.join(root, 'apps/admin/tsconfig.boot.json');
+  const tsBoot = `{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@lieshoucloud/boot": ["../packages/boot/src/index.ts"],
+      "@lieshoucloud/boot/*": ["../packages/boot/src/*"]
+    }
+  }
+}
+`;
+  fs.writeFileSync(tsconfigPath, tsBoot);
+  console.log('✅ admin    : tsconfig.boot.json（boot paths 注入）');
+}
+
 console.log(`\n🎉 四端注入完成 · features: ${adminPages.map((p) => p.feat).join(', ') || '无'}`);

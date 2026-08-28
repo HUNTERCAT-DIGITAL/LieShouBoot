@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "build:frontend": "cd apps/admin && pnpm build",
+    "build:frontend": "cd apps/admin && tsc -b tsconfig.boot.json && vite build",
     "prepare:boot": "node scripts/prepare.mjs"
   }
 }
